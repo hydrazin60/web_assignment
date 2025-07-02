@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | FitTrack</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation (Same as index.html) -->
+    <nav class="navbar">...</nav>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <h1 class="section-title animate-fade">Contact Us</h1>
+            
+            <div class="contact-container">
+                <div class="contact-info animate-slide-left">
+                    <h2>Get In Touch</h2>
+                    <p>Have questions about FitTrack or want to get involved? We'd love to hear from you!</p>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Address</h3>
+                            <p>123 Wellness Way, Health Sciences Building, Room 456</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>contact@fittrack.edu</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Phone</h3>
+                            <p>(123) 456-7890</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Office Hours</h3>
+                            <p>Monday-Friday: 9am-5pm</p>
+                            <p>Saturday: 10am-2pm</p>
+                            <p>Sunday: Closed</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form animate-slide-right">
+                    <h2>Send Us a Message</h2>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                    
+                    <div id="form-status" class="form-status" style="margin-top: 20px;"></div>
+                </div>
+            </div>
+            
+            <div class="map-container animate-fade">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215256836485!2d-73.98784492452581!3d40.74844097138976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1623251234567!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" style="background: #f9f9f9;">
+        <div class="container">
+            <h2 class="section-title animate-fade">Frequently Asked Questions</h2>
+            
+            <div class="faq-container">
+                <div class="faq-item animate-slide-up delay-1" style="margin-bottom: 20px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);">
+                    <button class="faq-question" style="width: 100%; padding: 15px 20px; text-align: left; border: none; background: none; font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                        <span>How do I join FitTrack?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer" style="padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+                        <p style="padding: 15px 0;">FitTrack is open to all students at our university. Simply create an account on our website to get started. There are no membership fees - all our services are completely free for students.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item animate-slide-up delay-2" style="margin-bottom: 20px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);">
+                    <button class="faq-question" style="width: 100%; padding: 15px 20px; text-align: left; border: none; background: none; font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Do I need any equipment to participate?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer" style="padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+                        <p style="padding: 15px 0;">Most of our activities require no special equipment. For fitness events, we provide all necessary equipment. Some workouts can be done with just body weight, and we often suggest household items as alternatives when needed.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item animate-slide-up delay-3" style="margin-bottom: 20px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);">
+                    <button class="faq-question" style="width: 100%; padding: 15px 20px; text-align: left; border: none; background: none; font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Can I suggest an event or workshop?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer" style="padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+                        <p style="padding: 15px 0;">Absolutely! We welcome suggestions from our members. You can email us your ideas or fill out the event suggestion form on our website. Our team reviews all suggestions and tries to accommodate popular requests.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item animate-slide-up delay-4" style="margin-bottom: 20px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);">
+                    <button class="faq-question" style="width: 100%; padding: 15px 20px; text-align: left; border: none; background: none; font-weight: 600; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                        <span>How can I get involved as a volunteer?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer" style="padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+                        <p style="padding: 15px 0;">We're always looking for enthusiastic volunteers! You can apply through our website or attend one of our volunteer information sessions held at the beginning of each semester. No prior experience is necessary.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Same as index.html) -->
+    <footer>...</footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/contact.js"></script>
+    <script>
+        // FAQ functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                
+                if (answer.style.maxHeight) {
+                    answer.style.maxHeight = null;
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

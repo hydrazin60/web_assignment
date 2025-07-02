@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Log | FitTrack</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation (Same as index.html) -->
+    <nav class="navbar">...</nav>
+
+    <!-- Nutrition Section -->
+    <section class="nutrition-section">
+        <div class="container">
+            <h1 class="section-title animate-fade">Nutrition Log</h1>
+            
+            <div class="calculator-grid">
+                <div class="calculator-card animate-slide-left">
+                    <h2>BMI Calculator</h2>
+                    <form id="bmi-form">
+                        <div class="form-group">
+                            <label for="height">Height (cm)</label>
+                            <input type="number" id="height" min="100" max="250" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="weight">Weight (kg)</label>
+                            <input type="number" id="weight" min="30" max="200" required>
+                        </div>
+                        
+                        <button type="submit" class="btn">Calculate BMI</button>
+                    </form>
+                    
+                    <div id="bmi-result" class="calculator-result" style="display: none;">
+                        <h3>Your BMI Result</h3>
+                        <p>BMI: <span id="bmi-value">0</span></p>
+                        <p>Category: <span id="bmi-category">-</span></p>
+                    </div>
+                </div>
+                
+                <div class="calculator-card animate-slide-right">
+                    <h2>Calorie Calculator</h2>
+                    <form id="calorie-form">
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" min="15" max="100" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" required>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cal-height">Height (cm)</label>
+                            <input type="number" id="cal-height" min="100" max="250" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cal-weight">Weight (kg)</label>
+                            <input type="number" id="cal-weight" min="30" max="200" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="activity">Activity Level</label>
+                            <select id="activity" required>
+                                <option value="1.2">Sedentary (little or no exercise)</option>
+                                <option value="1.375">Lightly active (light exercise 1-3 days/week)</option>
+                                <option value="1.55">Moderately active (moderate exercise 3-5 days/week)</option>
+                                <option value="1.725">Very active (hard exercise 6-7 days/week)</option>
+                                <option value="1.9">Extra active (very hard exercise & physical job)</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn">Calculate Calories</button>
+                    </form>
+                    
+                    <div id="calorie-result" class="calculator-result" style="display: none;">
+                        <h3>Your Daily Calorie Needs</h3>
+                        <p>Maintenance: <span id="calorie-value">0</span> kcal/day</p>
+                        <p>Weight loss (0.5kg/week): <span id="calorie-loss">0</span> kcal/day</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="calculator-card animate-fade" style="margin-top: 30px;">
+                <h2>Water Intake Calculator</h2>
+                <form id="water-form">
+                    <div class="form-group">
+                        <label for="water-weight">Weight (kg)</label>
+                        <input type="number" id="water-weight" min="30" max="200" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="water-activity">Activity Level</label>
+                        <select id="water-activity" required>
+                            <option value="0">Sedentary</option>
+                            <option value="0.5">Moderately Active</option>
+                            <option value="1">Very Active</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn">Calculate Water Needs</button>
+                </form>
+                
+                <div id="water-result" class="calculator-result" style="display: none;">
+                    <h3>Your Daily Water Needs</h3>
+                    <p>Recommended: <span id="water-value">0</span> ml per day</p>
+                    <p>About <span id="water-glasses">0</span> glasses (250ml each)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nutrition Tips Section -->
+    <section class="nutrition-tips" style="background: #f9f9f9;">
+        <div class="container">
+            <h2 class="section-title animate-fade">Healthy Eating Tips</h2>
+            
+            <div class="tips-grid">
+                <div class="tip-card animate-slide-up delay-1 hover-float">
+                    <i class="fas fa-apple-alt"></i>
+                    <h3>Eat More Fruits & Veggies</h3>
+                    <p>Aim for at least 5 servings of fruits and vegetables daily to get essential vitamins and minerals.</p>
+                </div>
+                
+                <div class="tip-card animate-slide-up delay-2 hover-float">
+                    <i class="fas fa-glass-whiskey"></i>
+                    <h3>Stay Hydrated</h3>
+                    <p>Drink water throughout the day. Thirst is often mistaken for hunger.</p>
+                </div>
+                
+                <div class="tip-card animate-slide-up delay-3 hover-float">
+                    <i class="fas fa-utensils"></i>
+                    <h3>Mindful Eating</h3>
+                    <p>Eat slowly and without distractions to better recognize hunger and fullness cues.</p>
+                </div>
+                
+                <div class="tip-card animate-slide-up delay-4 hover-float">
+                    <i class="fas fa-seedling"></i>
+                    <h3>Choose Whole Foods</h3>
+                    <p>Opt for whole grains over refined grains for better nutrition and sustained energy.</p>
+                </div>
+                
+                <div class="tip-card animate-slide-up delay-1 hover-float">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>Balance Your Plate</h3>
+                    <p>Include protein, healthy carbs, and vegetables in each meal for balanced nutrition.</p>
+                </div>
+                
+                <div class="tip-card animate-slide-up delay-2 hover-float">
+                    <i class="fas fa-cookie-bite"></i>
+                    <h3>Smart Snacking</h3>
+                    <p>Choose nutrient-dense snacks like nuts, yogurt, or fruit instead of processed snacks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meal Log Section -->
+    <section class="meal-log-section">
+        <div class="container">
+            <h2 class="section-title animate-fade">Daily Meal Log</h2>
+            
+            <div class="meal-log-container">
+                <div class="meal-log-tabs" style="display: flex; margin-bottom: 20px; border-bottom: 1px solid #ddd;">
+                    <button class="meal-tab active" style="padding: 10px 20px; border: none; background: none; border-bottom: 3px solid var(--primary);">Breakfast</button>
+                    <button class="meal-tab" style="padding: 10px 20px; border: none; background: none;">Lunch</button>
+                    <button class="meal-tab" style="padding: 10px 20px; border: none; background: none;">Dinner</button>
+                    <button class="meal-tab" style="padding: 10px 20px; border: none; background: none;">Snacks</button>
+                </div>
+                
+                <div class="meal-log-form animate-slide-left">
+                    <form id="meal-form">
+                        <div class="form-group">
+                            <label for="food-item">Food Item</label>
+                            <input type="text" id="food-item" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="food-amount">Amount (g/ml)</label>
+                            <input type="number" id="food-amount" min="1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="food-calories">Calories</label>
+                            <input type="number" id="food-calories" min="1" required>
+                        </div>
+                        
+                        <button type="submit" class="btn">Add Food</button>
+                    </form>
+                </div>
+                
+                <div class="meal-log-table animate-slide-right" style="margin-top: 30px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Food</th>
+                                <th>Amount</th>
+                                <th>Calories</th>
+                                <th>Time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Oatmeal</td>
+                                <td>150g</td>
+                                <td>250</td>
+                                <td>8:00 AM</td>
+                                <td><button class="btn-small" style="padding: 3px 8px; font-size: 0.8rem;">Delete</button></td>
+                            </tr>
+                            <tr>
+                                <td>Banana</td>
+                                <td>1 medium</td>
+                                <td>105</td>
+                                <td>8:15 AM</td>
+                                <td><button class="btn-small" style="padding: 3px 8px; font-size: 0.8rem;">Delete</button></td>
+                            </tr>
+                            <tr>
+                                <td>Greek Yogurt</td>
+                                <td>200g</td>
+                                <td>150</td>
+                                <td>10:30 AM</td>
+                                <td><button class="btn-small" style="padding: 3px 8px; font-size: 0.8rem;">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="meal-summary" style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px;">
+                        <h3>Daily Summary</h3>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <p>Total Calories: <strong>505</strong></p>
+                                <p>Protein: <strong>28g</strong></p>
+                            </div>
+                            <div>
+                                <p>Carbs: <strong>85g</strong></p>
+                                <p>Fats: <strong>12g</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Same as index.html) -->
+    <footer>...</footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/nutrition.js"></script>
+</body>
+</html>

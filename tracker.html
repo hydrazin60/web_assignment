@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Tracker | FitTrack</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation (Same as index.html) -->
+    <nav class="navbar">...</nav>
+
+    <!-- Activity Tracker Section -->
+    <section class="tracker-section">
+        <div class="container">
+            <h1 class="section-title animate-fade">Activity Tracker</h1>
+            
+            <div class="tracker-grid">
+                <div class="tracker-card animate-slide-left">
+                    <h2>Log Your Workout</h2>
+                    <form id="workout-form">
+                        <div class="form-group">
+                            <label for="workout-type">Workout Type</label>
+                            <select id="workout-type" required>
+                                <option value="">Select workout type...</option>
+                                <option value="running">Running</option>
+                                <option value="cycling">Cycling</option>
+                                <option value="swimming">Swimming</option>
+                                <option value="weight-training">Weight Training</option>
+                                <option value="yoga">Yoga/Pilates</option>
+                                <option value="hiit">HIIT</option>
+                                <option value="walking">Walking</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="duration">Duration (minutes)</label>
+                            <input type="number" id="duration" min="1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="intensity">Intensity Level</label>
+                            <select id="intensity" required>
+                                <option value="1">Light</option>
+                                <option value="2" selected>Moderate</option>
+                                <option value="3">Vigorous</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="calories">Calories Burned (optional)</label>
+                            <input type="number" id="calories" min="1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notes">Notes</label>
+                            <textarea id="notes" rows="3"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn">Log Workout</button>
+                    </form>
+                </div>
+                
+                <div class="tracker-card animate-slide-right">
+                    <h2>Weekly Activity Summary</h2>
+                    <canvas id="activity-chart"></canvas>
+                    <div class="stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px;">
+                        <div class="stat-card" style="background: #f5f5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                            <h3 style="color: var(--primary); font-size: 1.8rem;">5</h3>
+                            <p>Workouts</p>
+                        </div>
+                        <div class="stat-card" style="background: #f5f5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                            <h3 style="color: var(--primary); font-size: 1.8rem;">240</h3>
+                            <p>Minutes</p>
+                        </div>
+                        <div class="stat-card" style="background: #f5f5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                            <h3 style="color: var(--primary); font-size: 1.8rem;">1,850</h3>
+                            <p>Calories</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workout History Section -->
+    <section class="history-section" style="background: #f9f9f9;">
+        <div class="container">
+            <h2 class="section-title animate-fade">Workout History</h2>
+            
+            <div class="history-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Activity</th>
+                            <th>Duration</th>
+                            <th>Intensity</th>
+                            <th>Calories</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="workout-history">
+                        <tr>
+                            <td>2025-07-10</td>
+                            <td>Running</td>
+                            <td>45 mins</td>
+                            <td>Moderate</td>
+                            <td>350</td>
+                            <td><button class="btn-small" style="padding: 5px 10px; font-size: 0.8rem;">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>2025-07-08</td>
+                            <td>Weight Training</td>
+                            <td>60 mins</td>
+                            <td>Vigorous</td>
+                            <td>400</td>
+                            <td><button class="btn-small" style="padding: 5px 10px; font-size: 0.8rem;">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>2025-07-06</td>
+                            <td>Yoga</td>
+                            <td>30 mins</td>
+                            <td>Light</td>
+                            <td>150</td>
+                            <td><button class="btn-small" style="padding: 5px 10px; font-size: 0.8rem;">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>2025-07-03</td>
+                            <td>Cycling</td>
+                            <td>50 mins</td>
+                            <td>Moderate</td>
+                            <td>300</td>
+                            <td><button class="btn-small" style="padding: 5px 10px; font-size: 0.8rem;">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>2025-07-01</td>
+                            <td>HIIT</td>
+                            <td>25 mins</td>
+                            <td>Vigorous</td>
+                            <td>350</td>
+                            <td><button class="btn-small" style="padding: 5px 10px; font-size: 0.8rem;">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Goals Section -->
+    <section class="goals-section">
+        <div class="container">
+            <h2 class="section-title animate-fade">Set Your Fitness Goals</h2>
+            
+            <div class="tracker-grid">
+                <div class="tracker-card animate-slide-left">
+                    <h3>Weekly Activity Goal</h3>
+                    <form id="goals-form">
+                        <div class="form-group">
+                            <label for="goal-type">Goal Type</label>
+                            <select id="goal-type" required>
+                                <option value="workouts">Number of Workouts</option>
+                                <option value="minutes">Total Minutes</option>
+                                <option value="calories">Calories Burned</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="goal-target">Target Value</label>
+                            <input type="number" id="goal-target" min="1" required>
+                        </div>
+                        
+                        <button type="submit" class="btn">Set Goal</button>
+                    </form>
+                </div>
+                
+                <div class="tracker-card animate-slide-right">
+                    <h3>Goal Progress</h3>
+                    <div class="progress-container" style="margin-top: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span>Weekly Workouts: 3/5</span>
+                            <span>60%</span>
+                        </div>
+                        <div style="height: 10px; background: #f1f1f1; border-radius: 5px; overflow: hidden;">
+                            <div style="width: 60%; height: 100%; background: var(--primary);"></div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; margin: 20px 0 5px;">
+                            <span>Active Minutes: 180/300</span>
+                            <span>60%</span>
+                        </div>
+                        <div style="height: 10px; background: #f1f1f1; border-radius: 5px; overflow: hidden;">
+                            <div style="width: 60%; height: 100%; background: var(--secondary);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Same as index.html) -->
+    <footer>...</footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/tracker.js"></script>
+    <script>
+        // Initialize chart
+        const ctx = document.getElementById('activity-chart').getContext('2d');
+        const activityChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Workout Minutes',
+                    data: [45, 0, 60, 0, 25, 50, 0],
+                    backgroundColor: 'rgba(76, 175, 80, 0.7)',
+                    borderColor: 'rgba(76, 175, 80, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Minutes'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Day of Week'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Form submission
+        document.getElementById('workout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Workout logged successfully!');
+            this.reset();
+        });
+
+        document.getElementById('goals-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Goal set successfully!');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
