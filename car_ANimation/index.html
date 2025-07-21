@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Realistic Car Driving Simulation</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: linear-gradient(to bottom, #87ceeb 0%, #e0f7fa 100%);
+        height: 100vh;
+        font-family: Arial, sans-serif;
+      }
+
+      .scene {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        perspective: 500px;
+        overflow: hidden;
+      }
+
+      .road {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 400%;
+        height: 40%;
+        background: #333;
+        transform-origin: bottom;
+        transform: rotateX(30deg);
+        animation: roadMove 8s linear infinite;
+      }
+
+      .road::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        background: repeating-linear-gradient(
+          to right,
+          #fff 0%,
+          #fff 10%,
+          transparent 10%,
+          transparent 20%
+        );
+        background-size: 100px 100%;
+      }
+
+      .car-container {
+        position: absolute;
+        bottom: 15%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 400px;
+        height: 200px;
+        z-index: 10;
+      }
+      .light {
+        position: absolute;
+        bottom: 97px;
+        left: 115px;
+        width: 22px;
+        height: 6px;
+        z-index: 10;
+        border-radius: 15px;
+        transform: perspective(100px) rotateY(-10deg);
+        background: linear-gradient(
+          to right,
+          #ff0000 0%,
+          #ff3333 50%,
+          #ff0000 100%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        opacity: 0.3; /* Default hidden state */
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.3), 0 0 10px rgba(255, 0, 0, 0.2);
+        transition: opacity 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      /* Active Brake Light */
+      .light.brake-active {
+        opacity: 1;
+        box-shadow: 0 0 10px #ff0000, 0 0 20px rgba(255, 0, 0, 0.8),
+          0 0 40px rgba(255, 50, 50, 0.6), 0 0 60px rgba(255, 80, 80, 0.4);
+      }
+
+      /* Enhanced Headlight */
+.head-light {
+    position: absolute;
+    bottom: 83px;
+    right: 30px;
+    width: 22px;
+    height: 9px;
+    z-index: 10;
+    border-radius: 50%;
+    rotate: 20deg;
+    background-color: #f8f8c0;
+    opacity: 0;
+    box-shadow: 
+        0 0 5px rgba(248, 248, 192, 0.5),
+        0 0 10px rgba(248, 248, 192, 0.3);
+    transition: 
+        opacity 0.5s ease, 
+        box-shadow 0.5s ease;
+}
+
+.night .head-light {
+    opacity: 1;
+    box-shadow: 
+        0 0 10px #f8f8c0,
+        0 0 25px rgba(248, 248, 192, 0.8),
+        0 0 50px rgba(248, 248, 192, 0.6);
+}
+
+/* Straight forward beam */
+.head-light::after {
+    content: '';
+    position: absolute;
+    bottom: 50%;
+    left: 100%; /* Beam comes out from the front */
+    width: 300px;
+    height: 15px;
+    background: linear-gradient(
+        to left, /* Reverse gradient direction */
+        rgba(248, 248, 192, 0) 0%,
+        rgba(248, 248, 192, 0.3) 30%,
+        rgba(248, 248, 192, 0.7) 70%,
+        rgba(248, 248, 192, 0.9) 100%
+    );
+    transform: 
+        translateY(50%) 
+        translateX(5px); /* Small offset from light source */
+    filter: blur(10px);
+    opacity: 0;
+    clip-path: polygon(
+        0 20%,
+        100% 0%,
+        100% 100%,
+        0 80%
+    );
+    transition: opacity 0.5s ease;
+}
+
+.night .head-light::after {
+    opacity: 0.8;
+}
+
+/* Add this for dual headlights effect */
+.head-light:nth-child(2)::after {
+    transform: 
+        translateY(50%)
+        perspective(100px) 
+        rotateX(20deg)
+        translateX(0px); /* Offset second beam */
+}
+      .car-body {
+        position: absolute;
+        width: 180%;
+        height: 100%;
+        background-image: url(./newcar.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: initial;
+        filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5));
+      }
+
+      .tire {
+        position: absolute;
+        width: 72px;
+        height: 72px;
+        background-image: url("./cartire.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        animation: tireSpin 0.5s linear infinite;
+      }
+
+      .tire-front {
+        bottom: 26px;
+        left: 129px;
+      }
+
+      .tire-rear {
+        bottom: 25px;
+        right: 37px;
+      }
+
+      .clouds-container {
+        position: absolute;
+        width: 400%;
+        height: 30%;
+        top: 10%;
+        left: 0;
+        animation: bgMove 120s linear infinite;
+      }
+
+      .background {
+        position: absolute;
+        width: 400%;
+        height: 60%;
+        bottom: 40%;
+        left: 0;
+        background: url("https://www.transparentpng.com/thumb/tree/small-tree-pictures-0.png")
+          repeat-x;
+        background-size: 200px 200px;
+        animation: bgMove 20s linear infinite;
+      }
+
+      /* .mountains {
+        position: absolute;
+        width: 400%;
+        height: 30%;
+        bottom: 30%;
+        left: 0;
+        background: url("https://img.freepik.com/premium-vector/mountains-landscape-with-green-meadows-trees-morning-vector-illustration_736990-231.jpg")
+          repeat-x;
+        background-size: 400px 200px;
+        animation: bgMove 50s linear infinite;
+        opacity: 0.9;
+      } */
+
+      .mountains {
+        position: absolute;
+        width: 400%; /* Allows for seamless horizontal scrolling */
+        height: 100%; /* Full viewport height */
+        bottom: 0;
+        left: 0;
+        background: url("https://img.freepik.com/premium-vector/mountains-landscape-with-green-meadows-trees-morning-vector-illustration_736990-231.jpg")
+            repeat-x,
+          linear-gradient(to bottom, #87ceeb 0%, #e0f7fa 100%); /* Fallback sky gradient */
+        background-size: auto 100%,
+          /* Maintain aspect ratio for mountains */ cover; /* For the gradient */
+        background-position: bottom center,
+          /* Position mountains at bottom */ center center; /* Position gradient */
+        background-repeat: repeat-x,
+          /* Repeat mountains horizontally */ no-repeat; /* Don't repeat gradient */
+        animation: bgMove 150s linear infinite;
+        z-index: -2;
+        /* Depth effect with gradient overlay */
+      }
+
+      @keyframes bgMove {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        } /* Move half width for seamless loop */
+      }
+
+      @media (max-width: 768px) {
+        .mountains {
+          animation-duration: 200s; /* Slower on mobile for better performance */
+          background-size: auto 70%, /* Smaller mountains on mobile */ cover;
+        }
+      }
+      .controls {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        z-index: 100;
+      }
+
+      button {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 4px;
+        background: #333;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      button:hover {
+        background: #555;
+      }
+
+      .toggle {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      }
+
+      .night {
+        background: linear-gradient(
+          to bottom,
+          #0f2027 0%,
+          #203a43 50%,
+          #2c5364 100%
+        ) !important;
+      }
+
+      .night .road {
+        background: #111 !important;
+      }
+
+      .night .mountains {
+        filter: brightness(0.5);
+      }
+
+      .car-light {
+        position: absolute;
+        bottom: 15%;
+        left: 50%;
+        width: 400px;
+        height: 5px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 0, 0.8),
+          rgba(255, 255, 0, 0)
+        );
+        transform: translateX(-50%) perspective(500px) rotateX(30deg);
+        filter: blur(5px);
+        opacity: 0;
+        z-index: 5;
+      }
+
+      .night .car-light {
+        opacity: 1;
+      }
+
+      @keyframes roadMove {
+        0% {
+          transform: rotateX(30deg) translateX(0);
+        }
+        100% {
+          transform: rotateX(30deg) translateX(-50%);
+        }
+      }
+
+      @keyframes bgMove {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      @keyframes tireSpin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .car-container {
+          width: 250px;
+          height: 125px;
+        }
+
+        .tire {
+          width: 60px;
+          height: 60px;
+        }
+
+        .tire-front {
+          left: 20px;
+        }
+
+        .tire-rear {
+          right: 20px;
+        }
+
+        .controls {
+          flex-wrap: wrap;
+          justify-content: center;
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scene">
+      <div class="clouds-container">
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+        <div class="cloud cloud4"></div>
+        <div class="cloud cloud5"></div>
+      </div>
+      <div class="mountains"></div>
+      <div class="background"></div>
+      <div class="road"></div>
+      <div class="car-light"></div>
+      <div class="car-container">
+        <div class="light"></div>
+        <div class="head-light"></div>
+        <div class="car-body"></div>
+        <div class="tire tire-front"></div>
+        <div class="tire tire-rear"></div>
+      </div>
+      <button class="toggle" onclick="toggleNightMode()">🌙 Night Mode</button>
+      <div class="controls">
+        <button onclick="startAnimation()">▶ Start</button>
+        <button onclick="stopAnimation()">⏹ Stop</button>
+        <button onclick="speedUp()">⏩ Speed Up</button>
+        <button onclick="slowDown()">⏪ Slow Down</button>
+        <button onclick="toggleSound()">🔊 Sound On</button>
+      </div>
+    </div>
+
+    <audio id="carSound" loop>
+      <source src="./song.mp3" type="audio/mp3" />
+    </audio>
+
+    <script>
+      const road = document.querySelector(".road");
+      const background = document.querySelector(".background");
+      const mountains = document.querySelector(".mountains");
+      const cloudsContainer = document.querySelector(".clouds-container");
+      const tires = document.querySelectorAll(".tire");
+      const carSound = document.getElementById("carSound");
+      let animationSpeed = 1;
+      let isPlaying = true;
+      let isNight = false;
+  
+
+      function updateAnimationSpeed() {
+        road.style.animationDuration = `${8 / animationSpeed}s`;
+        background.style.animationDuration = `${20 / animationSpeed}s`;
+        mountains.style.animationDuration = `${40 / animationSpeed}s`;
+        cloudsContainer.style.animationDuration = `${120 / animationSpeed}s`;
+        tires.forEach((tire) => {
+          tire.style.animationDuration = `${0.5 / animationSpeed}s`;
+        });
+
+        if (soundOn) {
+          carSound.playbackRate = animationSpeed * 0.8;
+        }
+      }
+
+      function startAnimation() {
+        if (!isPlaying) {
+          road.style.animationPlayState = "running";
+          background.style.animationPlayState = "running";
+          mountains.style.animationPlayState = "running";
+          cloudsContainer.style.animationPlayState = "running";
+          tires.forEach((tire) => {
+            tire.style.animationPlayState = "running";
+          });
+          isPlaying =  true;
+
+          if (soundOn) {
+            carSound.play();
+          }
+        }
+      }
+
+      function stopAnimation() {
+        if (isPlaying) {
+          road.style.animationPlayState = "paused";
+          background.style.animationPlayState = "paused";
+          mountains.style.animationPlayState = "paused";
+          cloudsContainer.style.animationPlayState = "paused";
+          tires.forEach((tire) => {
+            tire.style.animationPlayState = "paused";
+          });
+          isPlaying = false;
+
+          if (soundOn) {
+            carSound.pause();
+          }
+        }
+      }
+
+      function speedUp() {
+        if (animationSpeed < 3) {
+          animationSpeed += 0.5;
+          updateAnimationSpeed();
+        }
+      }
+      function slowDown() {
+        if (animationSpeed > 0.5) {
+          animationSpeed -= 0.5;
+          updateAnimationSpeed();
+
+          // Activate brake light
+          const brakeLight = document.querySelector(".light");
+          brakeLight.classList.add("brake-active");
+        }
+      }
+
+      // Add event listeners for mouse down/up
+      const slowButton = document.querySelector('button[onclick="slowDown()"]');
+
+      slowButton.addEventListener("mousedown", function () {
+        const brakeLight = document.querySelector(".light");
+        brakeLight.classList.add("brake-active");
+      });
+
+      slowButton.addEventListener("mouseup", function () {
+        const brakeLight = document.querySelector(".light");
+        brakeLight.classList.remove("brake-active");
+      });
+
+      slowButton.addEventListener("mouseleave", function () {
+        const brakeLight = document.querySelector(".light");
+        brakeLight.classList.remove("brake-active");
+      });
+
+      // For touch devices
+      slowButton.addEventListener("touchstart", function () {
+        const brakeLight = document.querySelector(".light");
+        brakeLight.classList.add("brake-active");
+      });
+
+      slowButton.addEventListener("touchend", function () {
+        const brakeLight = document.querySelector(".light");
+        brakeLight.classList.remove("brake-active");
+      });
+
+      function toggleNightMode() {
+        const body = document.body;
+        isNight = !isNight;
+        body.classList.toggle("night");
+        document.querySelector(".toggle").textContent = isNight
+          ? "☀ Day Mode"
+          : "🌙 Night Mode";
+      }
+
+
+  let soundOn = true; 
+  carSound.play(); 
+  carSound.volume = 0.9; 
+
+  function toggleSound() {
+    soundOn = !soundOn;
+    if (soundOn) {
+      carSound.play();
+      carSound.playbackRate = animationSpeed * 0.9;
+    } else {
+      carSound.pause();
+    }
+    document.querySelector('button[onclick="toggleSound()"]').textContent = 
+      soundOn ? "🔇 Sound Off":"";
+  }
+
+  updateAnimationSpeed();
+  carSound.play().catch(e => console.log("Auto-play prevented:", e));
+    </script>
+  </body>
+</html>
